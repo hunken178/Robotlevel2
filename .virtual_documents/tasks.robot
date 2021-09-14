@@ -15,6 +15,7 @@ Library         RPA.Robocloud.Secrets
 Library         RPA.Dialogs
 Suite Setup     Open the robot website
 
+
 ** Variables **
 ${DOWNLOAD_DIR}     ${CURDIR}${/}Download
 ${URL}              https://robotsparebinindustries.com
@@ -49,6 +50,7 @@ Open the robot website
     Submit Form
     Wait Until Page Contains Element    id:sales-form
 
+
 Open the robot order website
     Click Element    xpath=//a[@class="nav-link"]
     Close the annoying modal
@@ -74,6 +76,7 @@ Collect Search Query From User
     ${response}=    Run dialog
     [Return]    ${response.search}
 
+
 Download Order file to Download Dir 
     ${urlOrder}=     Collect Search Query From User
     Set Download Directory        ${CURDIR}
@@ -83,6 +86,7 @@ Download Order file to Download Dir
     ...    5 sec
     ...    File Should Exist
     ...    ${FILENAME}
+
 
 Fill the form    
     [Documentation]        Fill data to controls in form
@@ -94,6 +98,7 @@ Fill the form
     Input Text                   ${Legs}        ${row}[Legs]
     Input Text                   ${SAddress}    ${row}[Address]
 
+
 Preview the robot     
     Click Element When Visible        ${Review} 
     Wait Until Element Is Visible     ${RobotReview}
@@ -101,6 +106,7 @@ Preview the robot
 
 Submit the order
     Click Button            ${ButtonOrder} 
+
 
 Submit The Order and Checking until Success
     [Documentation]    Submit order by click on button "Order"
@@ -111,6 +117,7 @@ Submit The Order and Checking until Success
     ...    Submit the order
     ${present}=       Run Keyword And Return Status    Element Should Be Visible   ${ButtonOrder} 
     Run Keyword If    ${present}    Submit The Order and Checking until Success
+
 
 Get Receipt
     ${receipt_results_html}=        Get Element Attribute    ${Receipt}       outerHTML
@@ -132,13 +139,16 @@ Store the receipt as a PDF file
     Html To Pdf            ${receipthtml}             ${CURDIR}${/}output${/}receipt_${OrderNumber}.pdf  
     [Return]               ${CURDIR}${/}output${/}receipt_${OrderNumber}.pdf
 
+
 Take a screenshot of the robot
     [Documentation]     Take a sceenshot of Robot then store in Download directory.
     [Arguments]         ${OrderNumber}
     Screenshot          ${RobotReview}          ${DOWNLOAD_DIR}${/}Robot_${OrderNumber}.JPEG
     [Return]            ${DOWNLOAD_DIR}${/}Robot_${OrderNumber}.JPEG
 
+
      
+
 
 Embed the robot screenshot to the receipt PDF file    
     [Documentation]       Open current PDF (strored at keyword: Store the receipt as a PDF file) 
@@ -152,10 +162,12 @@ Embed the robot screenshot to the receipt PDF file
  Go to order another robot
     Click Element When Visible        ${ButtonOAnother}
 
+
 Create a ZIP file of the receipts     
     [Documentation]    Add all receipt files to a zip found.
     Archive Folder With Zip     ${CURDIR}${/}output${/}receipt      ${CURDIR}${/}output${/}receipts.zip   recursive=True  include=*.pdf  
     Remove Directory            ${CURDIR}${/}output${/}receipt      recursive=True 
+
 
 Process order
     [Documentation]        Close dialog then fill data in to the form, review the robot then submit the order.
@@ -173,6 +185,7 @@ Process order
     Embed the robot screenshot to the receipt PDF file    ${pdf}     ${order}[Order number]
     Go to order another robot
 
+
 ** Tasks **
 Order robots form RobotSpareBin Industries Inc
     Create Directory    ${DOWNLOAD_DIR}
@@ -188,5 +201,6 @@ Order robots form RobotSpareBin Industries Inc
     END
     Create a ZIP file of the receipts
     Remove Directory        ${DOWNLOAD_DIR}    recursive=True
+
 
 

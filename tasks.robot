@@ -12,6 +12,7 @@ Library         String
 Library         RPA.PDF                   # PDF functions 
 Library         RPA.Archive               # Zip file
 Library         RPA.Robocloud.Secrets
+Library         RPA.Dialogs
 Suite Setup     Open the robot website
 
 *** Variables ***
@@ -34,7 +35,7 @@ ${ButtonOrder}      xpath=//button[@id="order"]
 ${ButtonOAnother}   xpath=//button[@id="order-another"]
 ${RetryMount}=                  5x
 ${RetryInterval}=               0.5s
-
+${FILENAME}=    orders.csv
 
 *** Keywords ***
 Open the robot website
@@ -53,10 +54,11 @@ Open the robot order website
 
 
 Get Order By CSV
-    [Documentation]    Download CSV file then read data from that file.
-    ...                Return a list item of CSV file without header.
-    Download            ${CSVFile}                  ${DOWNLOAD_DIR}        overwrite=True
-    ${orders}=          Read table from CSV         ${DOWNLOAD_DIR}${/}orders.csv
+    # [Documentation]    Download CSV file then read data from that file.
+    # ...                Return a list item of CSV file without header.
+    # Download            ${CSVFile}                  ${DOWNLOAD_DIR}        overwrite=True
+    ${orders}=          Read table from CSV         ${CURDIR}${/}orders.csv
+    # ${orders}=          Read table from CSV         ${DOWNLOAD_DIR}${/}orders.csv
     [Return]            ${orders}
 
 
@@ -64,7 +66,23 @@ Close the annoying modal
     [Documentation]    If the modal dialog is open then closed it.
     ${isDialogVisible}=       Run Keyword And Return Status     Element Should Be Visible   ${Dialog}      
     Run Keyword If            ${isDialogVisible}                Click Button                ${ButtonOK} 
+Collect Search Query From User
+    Add heading        Input URL of order file
+    Add Text Input    search    label= Search query
+    Add Text    URL : "https://robotsparebinindustries.com/orders.csv"
+    ${response}=    Run dialog
+    [Return]    ${response.search}
 
+Download Order file to Download Dir 
+    ${urlOrder}=     Collect Search Query From User
+    Set Download Directory        ${CURDIR}
+    Download    ${urlOrder}    ${CURDIR}     overwrite=True
+    Wait Until Keyword Succeeds    
+    ...    2 min
+    ...    5 sec
+    ...    File Should Exist
+    ...    ${FILENAME}
+    
 Fill the form    
     [Documentation]        Fill data to controls in form
     ...                    Format of the Row is: Head, Body, Legs, Address
@@ -159,6 +177,8 @@ Order robots form RobotSpareBin Industries Inc
     Create Directory    ${DOWNLOAD_DIR}
     Set Download Directory     ${DOWNLOAD_DIR}
     Create Directory           ${CURDIR}${/}output${/}receipt
+    # Collect Search Query From User
+    Download Order file to Download Dir
     Open the robot order website
     ${orders}=    Get Order By CSV
    
