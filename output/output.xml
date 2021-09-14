@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1 (Python 3.7.5 on win32)" generated="20210824 16:55:07.047" rpa="true" schemaversion="2">
+<suite id="s1" name="Tasks" source="c:\Users\Admin\Robots\RobotLevel2\tasks.robot">
+<kw name="Open the robot website" type="SETUP">
+<doc>Open Website and try to use Vault file.</doc>
+<kw name="Open Available Browser" library="RPA.Browser.Selenium">
+<arg>${URL}</arg>
+<doc>Attempts to open a browser on the user's device from a set of
+supported browsers. Automatically downloads a corresponding webdriver
+if none is already installed.</doc>
+<msg timestamp="20210824 16:55:08.855" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg timestamp="20210824 16:55:08.879" level="INFO">Created download root directory: C:\Users\Admin\AppData\Local\robocorp\webdrivers</msg>
+<msg timestamp="20210824 16:55:08.879" level="INFO">Created symlink directory: C:\Users\Admin\AppData\Local\robocorp\webdrivers</msg>
+<msg timestamp="20210824 16:55:08.880" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg timestamp="20210824 16:55:10.509" level="INFO">Created Chrome browser with arguments: --disable-dev-shm-usage --disable-web-security --allow-running-insecure-content --no-sandbox</msg>
+<msg timestamp="20210824 16:55:10.509" level="INFO" html="true">&lt;p&gt;Attempted combinations:&lt;/p&gt;&lt;div class="doc"&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Browser&lt;/th&gt;&lt;th&gt;Download&lt;/th&gt;&lt;th&gt;Error&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chrome&lt;/td&gt;&lt;td&gt;False&lt;/td&gt;&lt;td&gt;Message: 'chromedriver' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home
+&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chrome&lt;/td&gt;&lt;td&gt;True&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg timestamp="20210824 16:55:10.509" level="INFO">Opening url 'https://robotsparebinindustries.com'</msg>
+<status status="PASS" starttime="20210824 16:55:08.853" endtime="20210824 16:55:11.778"/>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="RPA.Browser.Selenium">
+<arg>1</arg>
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<status status="PASS" starttime="20210824 16:55:11.779" endtime="20210824 16:55:11.781"/>
+</kw>
+<kw name="Get Secret" library="RPA.Robocloud.Secrets">
+<var>${secret}</var>
+<arg>credentials</arg>
+<doc>Read a secret from the configured source, e.g. Robocloud Vault,
+and return it as a ``Secret`` object.</doc>
+<msg timestamp="20210824 16:55:11.782" level="INFO">Protecting keyword: RPA.Robocloud.Secrets.Get Secret</msg>
+<msg timestamp="20210824 16:55:11.786" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="FAIL" starttime="20210824 16:55:11.782" endtime="20210824 16:55:11.786"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:username</arg>
+<arg>${secret}[username]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210824 16:55:11.787" endtime="20210824 16:55:11.787"/>
+</kw>
+<kw name="Input Password" library="RPA.Browser.Selenium">
+<arg>id:password</arg>
+<arg>${secret}[password]</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210824 16:55:11.788" endtime="20210824 16:55:11.788"/>
+</kw>
+<kw name="Submit Form" library="RPA.Browser.Selenium">
+<doc>Submits a form identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210824 16:55:11.788" endtime="20210824 16:55:11.789"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>id:sales-form</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="NOT RUN" starttime="20210824 16:55:11.789" endtime="20210824 16:55:11.789"/>
+</kw>
+<status status="FAIL" starttime="20210824 16:55:08.851" endtime="20210824 16:55:11.790"/>
+</kw>
+<test id="s1-t1" name="Order robots form RobotSpareBin Industries Inc">
+<status status="FAIL" starttime="20210824 16:55:11.791" endtime="20210824 16:55:11.792">Parent suite setup failed:
+KeyError: 'Undefined secret: credentials'</status>
+</test>
+<doc>Order robots from RobotSparBin Industries Inc
+Save the order HTML receipt as a PDF file
+Save the screenshot of order robot.
+Embeds the screenshot of the robot to the PDF receipt
+Creates Zip Archive of the receipts and images</doc>
+<status status="FAIL" starttime="20210824 16:55:07.051" endtime="20210824 16:55:11.794">Suite setup failed:
+KeyError: 'Undefined secret: credentials'</status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20210824 16:55:11.783" level="ERROR">Failed to load secrets file: [Errno 2] No such file or directory: 'C:\\Users\\Admin\\RobotLevel2\\vault.json'</msg>
+</errors>
+</robot>

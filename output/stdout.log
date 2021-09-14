@@ -1,0 +1,15 @@
+==============================================================================
+Tasks :: Order robots from RobotSparBin Industries Inc Save the order HTML ...
+==============================================================================
+Order robots form RobotSpareBin Industries Inc                        | FAIL |
+Parent suite setup failed:
+KeyError: 'Undefined secret: credentials'
+------------------------------------------------------------------------------
+Tasks :: Order robots from RobotSparBin Industries Inc Save the or... | FAIL |
+Suite setup failed:
+KeyError: 'Undefined secret: credentials'
+
+1 task, 0 passed, 1 failed
+==============================================================================
+Output:  c:\Users\Admin\Robots\RobotLevel2\output\output.xml
+Log:     c:\Users\Admin\Robots\RobotLevel2\output\log.html
